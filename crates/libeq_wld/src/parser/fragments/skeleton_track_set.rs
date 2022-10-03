@@ -287,6 +287,10 @@ impl SkeletonTrackSetFlags {
     pub fn has_unknown_flag(&self) -> bool {
         self.0 & Self::UNKNOWN_FLAG == Self::UNKNOWN_FLAG
     }
+
+    pub fn to_u32(&self) -> u32 {
+        self.0
+    }
 }
 
 #[cfg(test)]
