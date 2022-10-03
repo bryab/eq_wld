@@ -247,7 +247,7 @@ impl UvMap {
 }
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, PartialEq)]
+#[derive(PartialEq)]
 pub struct RenderMethod(u32);
 
 impl RenderMethod {
@@ -294,6 +294,33 @@ impl RenderMethod {
 
     pub fn user_defined(&self) -> bool {
         self.0 >> 31 == 1
+    }
+}
+
+impl From<RenderMethod> for u32 {
+    fn from(value: RenderMethod) -> Self {
+        value.0
+    }
+}
+
+impl std::fmt::Debug for RenderMethod {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            r#"RenderMethod(0b{:b}) {{
+    draw_style: {:?}
+    lighting: {:?}
+    shading: {:?}
+    texture_style: {:?}
+    unknown_bits: {:?}
+}}"#,
+            self.0,
+            self.draw_style(),
+            self.lighting(),
+            self.shading(),
+            self.texture_style(),
+            self.unknown_bits()
+        )
     }
 }
 
