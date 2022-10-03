@@ -199,6 +199,10 @@ impl ActorInstFlags {
     pub fn sprite_volume_only(&self) -> bool {
         self.0 & Self::SPRITE_VOLUME_ONLY == Self::SPRITE_VOLUME_ONLY
     }
+
+    pub fn to_u32(&self) -> u32 {
+        self.0
+    }
 }
 
 #[cfg(test)]

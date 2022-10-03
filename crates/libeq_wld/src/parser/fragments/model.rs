@@ -176,6 +176,11 @@ impl ActorDefFlags {
     pub fn has_current_action(&self) -> bool {
         self.0 & Self::HAS_CURRENT_ACTION == Self::HAS_CURRENT_ACTION
     }
+
+    pub fn to_u32(&self) -> u32 {
+        self.0
+    }
+    
 }
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

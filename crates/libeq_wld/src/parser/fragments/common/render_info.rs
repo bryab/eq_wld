@@ -295,6 +295,11 @@ impl RenderMethod {
     pub fn user_defined(&self) -> bool {
         self.0 >> 31 == 1
     }
+
+    pub fn to_u32(&self) -> u32 {
+        self.0
+    }
+    
 }
 
 impl From<RenderMethod> for u32 {
