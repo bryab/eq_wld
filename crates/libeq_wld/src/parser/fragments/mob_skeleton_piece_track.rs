@@ -86,12 +86,12 @@ impl FragmentParser for MobSkeletonPieceTrackFragment {
         } else {
             (i, None)
         };
-        if i.len() > 0 {
-            panic!(
-                "Data2 of MobSkeletonPieceTrackFragment found - flags: {:?}, size: {:?}, len: {:?}, remaining: {:?}",
-                flags, frame_count, i.len(), i
-            );
-        }
+        // if i.len() > 0 {
+        //     panic!(
+        //         "Data2 of MobSkeletonPieceTrackFragment found - flags: {:?}, size: {:?}, len: {:?}, remaining: {:?}",
+        //         flags, frame_count, i.len(), i
+        //     );
+        // }
 
         //let (remaining, data2) = if flags & 0x08 == 0x08 {
         //    count(le_i32, (size * 4) as usize)(i).map(|(i, data2)| (i, Some(data2)))?
