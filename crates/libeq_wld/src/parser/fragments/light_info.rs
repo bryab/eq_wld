@@ -122,6 +122,10 @@ impl PointLightFlags {
     pub fn has_regions(&self) -> bool {
         self.0 & Self::HAS_REGIONS == Self::HAS_REGIONS
     }
+
+    pub fn to_u32(&self) -> u32 {
+        self.0
+    }
 }
 
 #[cfg(test)]
