@@ -55,7 +55,7 @@ pub struct ObjectLocationFragment {
 
     // Typically contains 30 when used in main zone files and 0 when used for
     // placeable objects. This field only exists if `fragment2` points to a fragment.
-    pub unknown: i32,
+    pub unknown: i32, // FIXME: In my observation, this is a u32 that just matches the index of this object in its WLD.
 }
 
 impl FragmentParser for ObjectLocationFragment {
