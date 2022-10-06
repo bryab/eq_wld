@@ -309,10 +309,6 @@ impl RenderMethod {
             Self::Standard { .. } => self.as_u32().to_le_bytes().to_vec(),
         }
     }
-
-    pub fn to_u32(&self) -> u32 {
-        self.0
-    }
     
 }
 
