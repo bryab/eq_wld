@@ -46,6 +46,7 @@ pub struct MeshFragment {
     pub fragment3: FragmentRef<i32>,
 
     /// _Unknown_ - This usually seems to reference the first [TextureImagesFragment] fragment in the file.
+    // NOTE - this is often -2 (Not a fragment ref).  It sometimes points to a 0x18 (POLYHEDRONDEFINITION ref)
     pub fragment4: FragmentRef<i32>,
 
     /// For zone meshes this typically contains the X coordinate of the center of the mesh.

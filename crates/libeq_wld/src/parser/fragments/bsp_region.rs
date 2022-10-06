@@ -75,15 +75,19 @@ pub struct BspRegionFragment {
     pub size7: u32,
 
     /// _Unknown_ - An encoded string.
+    // NOTE: This is not a string - if it is, it's not encoded using the StringHash method or ASCII.
     pub name7: Vec<u8>,
 
     /// _Unknown_ - Usually references nothing.
+    // Note - Likely not a fragment reference.  This contains data only if bit 7 is NOT set in the flags.
     pub fragment2: FragmentRef<i32>,
 
     /// If there are any polygons in this region then this reference points to a [MeshFragment]
     /// that contains only those polygons. That [MeshFragment] must contain all geometry information
     /// contained within the volume that this region represents and nothing that lies outside of
     /// that volume.
+    // Note - This is sometimes not a fragment reference.  It's usually a fragment reference if bit 7 is set, but not always.
+    // If fragment2 has no data, then this is likely a fragment reference.  If it has data, this is something else.
     pub mesh_reference: Option<FragmentRef<MeshFragment>>,
 }
 
