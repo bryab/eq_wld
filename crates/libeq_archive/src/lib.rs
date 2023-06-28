@@ -32,7 +32,43 @@ pub use parser::{Archive, Block, Directory, Footer, Header, IndexEntry};
 
 const UNCOMPRESSED_BLOCK_SIZE: usize = 8192;
 
+/// Provides read-only access to a S3D archive, decompressing data as it is requested
+#[derive(Debug)]
+
+pub struct EqArchiveReader {
+    pub filenames: Vec<String>,
+    archive: Archive,
+}
+
+impl EqArchiveReader {
+    pub fn new<R: Read>(mut reader: R) -> Result<EqArchiveReader, Error> {
+        let mut buffer = Vec::new();
+        reader.read_to_end(&mut buffer)?;
+        let mut archive = Archive::parse(&buffer[..])?.1;
+        archive.index_entries.sort_by_key(|e| e.data_offset);
+        let filenames = archive.filenames();
+        Ok(EqArchiveReader { archive, filenames })
+    }
+
+    pub fn get(&self, filename: &str) -> Result<Vec<u8>, Error> {
+        let position = self
+            .filenames
+            .iter()
+            .position(|f| f.eq_ignore_ascii_case(filename))
+            .ok_or(Error::FileNotFound(filename.to_string()))?;
+        let data = self
+            .archive
+            .index_entries
+            .get(position)
+            .map(|entry| entry.decompress(&self.archive.blocks))
+            .ok_or(Error::FileNotFound(filename.to_string()))?;
+        Ok(data)
+    }
+}
+
+/// Provides full read and write methods for Everquest S3D archives
 #[derive(Default, Debug)]
+
 pub struct EqArchive {
     files: Vec<(String, Vec<u8>)>,
 }
